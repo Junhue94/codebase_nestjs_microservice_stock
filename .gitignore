@@ -69,4 +69,4 @@ npm-debug.log
 /dist
 
 # config
-/src/config
+/config
