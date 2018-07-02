@@ -1,13 +1,37 @@
 import { Injectable } from '@nestjs/common';
+import { StockDetails } from './interfaces/stock.details';
 
 @Injectable()
 export class StockService {
-    create() {
-        return 'Stock Create';
+    create(stock) {
+        return stock;
     }
 
-    findAll() {
-        return 'Stock Get All';
+    findAll(): StockDetails[] {
+        return [
+            {
+                _id: '1',
+                type: 'Current',
+                entryDate: new Date(),
+                exitDate: null,
+                name: 'UOB',
+                sector: 'Banking',
+                country: 'SG',
+                currency: 'S$',
+                priceBuy: 10.5,
+                priceSell: null,
+                priceProfitTarget: 15.2,
+                priceStopLoss: 10.1,
+                quantityBuy: 500,
+                quantitySell: null,
+                totalDividend: 50.25,
+                totalCapital: 1250.5,
+                capitalReturn: null,
+                createdAt: new Date(),
+                updatedAt: null,
+                deleted: false
+            }
+        ];
     }
 
     findOne(id: string) {
