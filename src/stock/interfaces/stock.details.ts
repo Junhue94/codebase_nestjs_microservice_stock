@@ -1,5 +1,5 @@
 export interface StockDetails {
-    readonly _id: string;
+    readonly id: number;
     readonly type: string;
     readonly entryDate: Date;
     readonly exitDate: Date;
@@ -18,5 +18,5 @@ export interface StockDetails {
     readonly capitalReturn: number;
     readonly createdAt: Date;
     readonly updatedAt: Date;
-    readonly deleted: boolean;
+    readonly isDeleted: boolean;
 }

@@ -1,30 +1,30 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { CatsModule } from '../../src/cats/cats.module';
-import { CatsService } from '../../src/cats/cats.service';
+import { StockModule } from '../../src/stock/stock.module';
+import { StockService } from '../../src/stock/stock.service';
 import { INestApplication } from '@nestjs/common';
 
-describe('Cats', () => {
+describe('Stock', () => {
     let app: INestApplication;
-    let catsService = { findAll: () => ['test'] };
+    let stockService = { findAll: () => ['test'] };
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
-            imports: [CatsModule],
+            imports: [StockModule],
         })
-            .overrideProvider(CatsService)
-            .useValue(catsService)
+            .overrideProvider(StockService)
+            .useValue(stockService)
             .compile();
 
         app = module.createNestApplication();
         await app.init();
     });
 
-    it(`/GET cats`, () => {
+    it(`/GET stock`, () => {
         return request(app.getHttpServer())
-            .get('/cats')
+            .get('/stock')
             .expect(200)
-            .expect(catsService.findAll());
+            .expect(stockService.findAll());
     });
 
     afterAll(async () => {

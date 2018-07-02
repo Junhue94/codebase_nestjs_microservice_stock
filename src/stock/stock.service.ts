@@ -10,7 +10,7 @@ export class StockService {
     findAll(): StockDetails[] {
         return [
             {
-                _id: '1',
+                id: 1,
                 type: 'Current',
                 entryDate: new Date(),
                 exitDate: null,
@@ -29,7 +29,7 @@ export class StockService {
                 capitalReturn: null,
                 createdAt: new Date(),
                 updatedAt: null,
-                deleted: false
+                isDeleted: false
             }
         ];
     }

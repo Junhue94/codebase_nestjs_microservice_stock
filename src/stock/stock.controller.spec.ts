@@ -3,8 +3,8 @@ import { StockController } from './stock.controller';
 import { StockService } from './stock.service';
 
 describe('StockController', () => {
-    let stockController = StockController;
-    let stockService = StockService;
+    let stockController: any = StockController;
+    let stockService: any = StockService;
 
     beforeEach(async () => {
         const module = await Test.createTestingModule({
