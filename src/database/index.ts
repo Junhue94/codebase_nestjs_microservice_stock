@@ -1,11 +1,33 @@
 import * as Config from 'config';
 import * as Sequelize from 'sequelize';
+import { logger } from '../common/logger';
 
-const pgConfig: any = Config.get('postgres');
+const { database, user, password, host, dialect, logQueries } = Config.get('postgres');
 
-export const db = new Sequelize(pgConfig.database, pgConfig.user, pgConfig.password, {
-    host: pgConfig.host,
-    dialect: pgConfig.dialect,
-    operatorsAliases: false,
-    logging: pgConfig.logQueries
-});
+export let pgConnection;
+
+/**
+ * Test Postgres DB Connection
+ * @returns {Promise<any>}
+ */
+export const pgConnect = () => {
+    return new Promise((resolve, reject) => {
+        pgConnection = new Sequelize(database, user, password, {
+            host,
+            dialect,
+            operatorsAliases: false,
+            logging: logQueries
+        });
+
+        pgConnection
+            .authenticate()
+            .then(() => {
+                logger.info(`Database Service :: sequelize :: Connected to ${host}`);
+                resolve();
+            })
+            .catch(err => {
+                logger.error(`Database Service :: sequelize :: Connection error! ${JSON.stringify(err)}`);
+                reject(err);
+            });
+    });
+};
