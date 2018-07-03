@@ -3,7 +3,10 @@ import { stockModel } from './model';
 const Stock = (sequelize, DataTypes) => {
     return sequelize.define(
         'Stock',
-        stockModel(DataTypes)
+        stockModel(DataTypes),
+        {
+            freezeTableName: true
+        }
     );
 };
 

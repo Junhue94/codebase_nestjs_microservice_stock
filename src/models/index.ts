@@ -33,3 +33,5 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = pgSequelize;
 db.Sequelize = Sequelize;
+
+export default db;

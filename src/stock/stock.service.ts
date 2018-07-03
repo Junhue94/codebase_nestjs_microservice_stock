@@ -1,10 +1,22 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { StockDetails } from './interfaces/stock.details';
+import { logger } from '../common/logger';
+import db from '../models';
+
+const Stock = db.Stock;
 
 @Injectable()
 export class StockService {
     create(stock) {
-        return stock;
+        return Stock.create(stock)
+            .then(res => {
+                logger.info(`Create Stock ${JSON.stringify(res)}`);
+                return res;
+            })
+            .catch(err => {
+                logger.error(err);
+                throw new BadRequestException('/stock create', err)
+            });
     }
 
     findAll(): StockDetails[] {
