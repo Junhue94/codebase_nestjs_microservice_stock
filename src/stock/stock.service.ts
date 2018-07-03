@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { StockDetails } from './interfaces/stock.details';
-import { logger } from '../common/logger';
+import { setDeleted } from '../utils/helper';
 import db from '../models';
 
 const Stock = db.Stock;
@@ -8,57 +8,53 @@ const Stock = db.Stock;
 @Injectable()
 export class StockService {
     create(stock) {
-        return Stock.create(stock)
-            .then(res => {
-                logger.info(`Create Stock ${JSON.stringify(res)}`);
-                return res;
-            })
+        return Stock
+            .create(stock)
+            .then(res => res)
             .catch(err => {
-                logger.error(err);
-                throw new BadRequestException('/stock create', err)
+                throw new BadRequestException('Error in creating Stock', err);
             });
     }
 
     findAll(): StockDetails[] {
-        return [
-            {
-                id: 1,
-                type: 'Current',
-                entryDate: new Date(),
-                exitDate: null,
-                name: 'UOB',
-                sector: 'Banking',
-                country: 'SG',
-                currency: 'S$',
-                priceBuy: 10.5,
-                priceSell: null,
-                priceProfitTarget: 15.2,
-                priceStopLoss: 10.1,
-                quantityBuy: 500,
-                quantitySell: null,
-                totalDividend: 50.25,
-                totalCapital: 1250.5,
-                capitalReturn: null,
-                createdAt: new Date(),
-                updatedAt: null,
-                isDeleted: false
-            }
-        ];
+        return Stock
+            .findAll()
+            .then(res => res)
+            .catch(err => {
+                throw new BadRequestException('Error in retrieving all Stock', err);
+            });
     }
 
     findOne(id: string) {
-        return `Stock get id: #${id}`;
+        return Stock
+            .findById(id)
+            .then(res => res)
+            .catch(err => {
+                throw new BadRequestException(`Error in retrieving Stock with id ${id}`, err);
+            });
     }
 
-    update(id: string) {
-        return `Stock update id: #${id}`;
-    }
-
-    patch(id: string) {
-        return `Stock patch id: #${id}`;
+    update(id: string, stockDetails) {
+        return Stock
+            .update(stockDetails, {
+                where: { id },
+                limit: 1
+            })
+            .then(() => stockDetails)
+            .catch(err => {
+                throw new BadRequestException(`Error in updating Stock with id ${id}`, err);
+            });
     }
 
     remove(id: string) {
-        return `Stock Delete: #${id}`;
+        return Stock
+            .update(setDeleted, {
+                where: { id },
+                limit: 1
+            })
+            .then(() => id)
+            .catch(err => {
+                throw new BadRequestException(`Error in removing Stock with id ${id}`, err);
+            });
     }
 }

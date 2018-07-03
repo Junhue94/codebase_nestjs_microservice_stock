@@ -7,8 +7,8 @@ export class StockController {
     constructor(private readonly stockService: StockService) {}
 
     @Post()
-    async create(@Body() createStockDto) {
-        return this.stockService.create(createStockDto);
+    async create(@Body() stockDetails) {
+        return this.stockService.create(stockDetails);
     }
 
     @Get()
@@ -22,13 +22,8 @@ export class StockController {
     }
 
     @Put(':id')
-    update(@Param('id') id, @Body() updatedStockDto) {
-        return this.stockService.update(id);
-    }
-
-    @Patch(':id')
-    patch(@Param('id') id, @Body() updatedStockDto) {
-        return this.stockService.patch(id);
+    async update(@Param('id') id, @Body() stockDetails) {
+        return this.stockService.update(id, stockDetails);
     }
 
     @Delete(':id')

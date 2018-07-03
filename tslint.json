@@ -15,6 +15,7 @@
         "no-var-self": false,
         "prefer-const": false,
         "ter-indent": [true, 4],
+        "ter-arrow-parens": [true, "as-needed"],
         "trailing-comma": [false, { "multiline": "always", "singleline": "always" }]
     },
     "rulesDirectory": []
