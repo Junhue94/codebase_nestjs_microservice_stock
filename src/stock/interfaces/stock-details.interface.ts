@@ -1,4 +1,4 @@
-export interface StockDetails {
+export interface StockDetailsInterface {
     readonly id: number;
     readonly type: string;
     readonly entryDate: Date;

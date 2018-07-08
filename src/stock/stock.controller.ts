@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Put, Patch, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Req } from '@nestjs/common';
 import { StockService } from './stock.service';
-import { StockDetails } from './interfaces/stock.details';
+import { StockResultInterface } from './interfaces/stock-result.interface';
 
-@Controller('stock')
+@Controller('api/stock')
 export class StockController {
     constructor(private readonly stockService: StockService) {}
 
@@ -12,8 +12,8 @@ export class StockController {
     }
 
     @Get()
-    async findAll(): Promise<StockDetails[]> {
-        return this.stockService.findAll();
+    async findAll(@Req() req): Promise<StockResultInterface> {
+        return this.stockService.findAll(req);
     }
 
     @Get(':id')

@@ -1,5 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { StockDetails } from './interfaces/stock.details';
+import { StockResultInterface } from './interfaces/stock-result.interface';
 import { setDeleted } from '../utils/helper';
 import db from '../models';
 
@@ -16,10 +16,21 @@ export class StockService {
             });
     }
 
-    findAll(): StockDetails[] {
+    findAll(req): StockResultInterface {
         return Stock
             .findAll()
-            .then(res => res)
+            .then(res => {
+                return {
+                    offset: 1,
+                    currentPage: 1,
+                    totalRows: 1,
+                    totalPage: 1,
+                    sortField: null,
+                    sortSeq: null,
+                    filter: null,
+                    data: res
+                };
+            })
             .catch(err => {
                 throw new BadRequestException('Error in retrieving all Stock', err);
             });
